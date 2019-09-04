@@ -1,0 +1,25 @@
+<h1 class="text-center">Schools in District</h1>
+<div  align="right">
+<td><button class="btn btn-default" type="button" (click)="addSchool()">Add School</button></td>
+<td><button class="btn btn-default" type="button" (click)="goBack()">Districts</button></td>
+</div>
+ <!--
+<h3 class="text-center">School List</h3>
+-->
+<table class="table-striped" style="margin:0 auto;" *ngIf="allSchools">
+  <tr><th>Id</th>  <th>Dist Num</th><th>Name</th><th>Address</th>
+    <th>City, St Zip</th><th>Enrollment</th>
+    <th></th><th></th></tr>
+  <tr *ngFor="let school of allSchools" >
+    <td style="text-align:center">{{school.id}}</td>
+    
+    <td style="text-align:center">{{school.distnum}}</td> 
+    <td>{{school.name}}</td> <td>{{school.addr}}</td> 
+    <td>{{school.city}} {{school.status}}, {{school.zip}}</td>
+    <td style="text-align:right">{{school.enr}}</td>
+  <td><button class="btn btn-default" type="button" (click)="loadSchoolToEdit(school.id)">Edit</button> </td> 
+  <td><button class="btn btn-default" type="button" (click)="deleteSchool(school.id)">Delete</button></td>
+  <!--  td><button class="btn btn-default" type="button" (click)="displaySchoolsInDistrict(school.distnum)">Schools</button> </td --> 
+	
+  </tr>
+</table>

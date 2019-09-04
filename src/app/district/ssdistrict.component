@@ -21,10 +21,6 @@ export class DistrictComponent implements OnInit {
    districtIdToUpdate = null;
    processValidation = false;
    numDistricts :any;
-   locDistrictId : any;
-   locDistrictName : string;
-   locDistrictNum : string;
-   
    //Create form
    districtForm = new FormGroup({
        title: new FormControl('', Validators.required),
@@ -52,8 +48,7 @@ export class DistrictComponent implements OnInit {
                 data => this.allDistricts = data,
 				errorCode =>  this.statusCode = errorCode);  
 				
-   } // end getAllDistricts
-
+   }
    //Handle create and update district
    onDistrictFormSubmit() {
 
@@ -107,11 +102,56 @@ export class DistrictComponent implements OnInit {
 			    },
 		        errorCode => this.statusCode = errorCode);	  
 	  }
-   } // end onDistrictFormSubmit
+   }
   
-/*   
+
    //Delete district
-   xxxdeleteDistrict(districtId: string, distName: string) {
+   deleteDistrict(districtId: string, distName: string) {
+	this.numDistricts = 0
+	let retval = 0
+//	this.getDistrictCount(retval)
+
+	this.districtService.countDistricts()
+	.subscribe(successCode => {
+			  //this.statusCode = successCode;
+			 // console.log('in get Districtcount')
+			 // console.log(successCode)
+			  var strxx : string = JSON.stringify(successCode)
+			  strxx = strxx.trim()
+			  var n = strxx.indexOf("numDistricts");
+			 // console.log(`check this ${n}`)
+			  var x:string = `"numDistricts":`
+			  var len = x.length;
+			 // console.log(`length is ${len}`)
+			  n += len
+			  strxx = strxx.slice(n)
+			 // console.log(`Check this ${strxx}`)
+			  n = strxx.indexOf("}");
+			  strxx = strxx.substr(0,n)
+			 // console.log(`Check this ${strxx}`)
+			  this.numDistricts = `${strxx}`
+			  retval = this.numDistricts
+				console.log(`  BEFORE LEAVING retval = ${retval}` )
+				console.log(`                 numdistricts = ${this.numDistricts}`)
+
+
+
+
+
+
+
+
+
+
+	
+	console.log('in deleteDisrict')
+	console.log(`    this.numDistricts = ${this.numDistricts}`)
+	console.log(`    retval = ${retval}`)
+
+
+	if (retval > 0 )
+		alert(`This district has ${this.numDistricts} schools - Cannot delete district with schools still associated with it.` )
+else {
 	if(confirm("Are you sure to delete school district "+distName+' - id = '+ districtId )) 
 	{
 		
@@ -125,8 +165,13 @@ export class DistrictComponent implements OnInit {
 				    this.backToCreateDistrict();
 			    },
 				errorCode => this.statusCode = errorCode); 
-	}	   
-   }  // end deleteDistrict    */
+	}	 // end cofirm message  
+} // end else there are schools
+},
+errorCode => this.statusCode = errorCode); 
+}	// end getDistrictCount(retval)
+ 
+   }  // end deleteDistrict
    
 
    //Perform preliminary processing configurations
@@ -142,126 +187,37 @@ export class DistrictComponent implements OnInit {
    }
 
 
-   getDistrictCount(retval){
-	
+   xgetDistrictCount(retval){
 	this.districtService.countDistricts()
 	.subscribe(successCode => {
 			  //this.statusCode = successCode;
-			  console.log('in get Districtcount')
-			  console.log(successCode)
+			 // console.log('in get Districtcount')
+			 // console.log(successCode)
 			  var strxx : string = JSON.stringify(successCode)
 			  strxx = strxx.trim()
 			  var n = strxx.indexOf("numDistricts");
-			  console.log(`check this ${n}`)
+			 // console.log(`check this ${n}`)
 			  var x:string = `"numDistricts":`
 			  var len = x.length;
-			  console.log(`length is ${len}`)
+			 // console.log(`length is ${len}`)
 			  n += len
 			  strxx = strxx.slice(n)
-			  console.log(`Check this ${strxx}`)
+			 // console.log(`Check this ${strxx}`)
 			  n = strxx.indexOf("}");
 			  strxx = strxx.substr(0,n)
-			  console.log(`Check this ${strxx}`)
+			 // console.log(`Check this ${strxx}`)
 			  this.numDistricts = `${strxx}`
 			  retval = this.numDistricts
-			  
+				console.log(`  BEFORE LEAVING retval = ${retval}` )
+				console.log(`                 numdistricts = ${this.numDistricts}`)
+
+
 		  },
 		  errorCode => this.statusCode = errorCode); 
-   }  // end getDistrictCount()
-
-/*xxxDelete district
-xxxdeleteDistrict(districtId: string, distName: string) {
-	this.locDistrictId = districtId
-	this.locDistrictName = distName
-	this.districtService.countDistricts()
-	.subscribe(successCode => {
-			  //this.statusCode = successCode;
-			  console.log('in get Districtcount')
-			  console.log(successCode)
-			  var strxx : string = JSON.stringify(successCode)
-			  strxx = strxx.trim()
-			  var n = strxx.indexOf("numDistricts");
-			  console.log(`check this ${n}`)
-			  var x:string = `"numDistricts":`
-			  var len = x.length;
-			  console.log(`length is ${len}`)
-			  n += len
-			  strxx = strxx.slice(n)
-			  console.log(`Check this ${strxx}`)
-			  n = strxx.indexOf("}");
-			  strxx = strxx.substr(0,n)
-			  console.log(`Check this ${strxx}`)
-			  this.numDistricts = `${strxx}`
-				this.Want2Delete()
-		  },	  // error on count
-		  errorCode => this.statusCode = errorCode);  
-
- 
-   }  // end deleteDistrict  xxx*/
-// *xxxDelete district
-deleteDistrict(districtId: string, distName: string, districtNum:string) {
-	this.locDistrictId = districtId
-	this.locDistrictName = distName
-	this.locDistrictNum = districtNum
-	this.districtService.countSchools(this.locDistrictNum)
-	.subscribe(successCode => {
-			  //this.statusCode = successCode;
-			  console.log('in get Districtcount')
-			  console.log(successCode)
-			  console.log('   After successCode')
-			  var strxx : string = JSON.stringify(successCode)
-			  strxx = strxx.trim()
-			  var n = strxx.indexOf("numSchools");
-			  console.log( `strxxx->${strxx}<--`)
-			  console.log(`check this ${n}`)
-			  var x:string = `"numSchools":`
-			  var len = x.length;
-			  console.log(`length is ${len}`)
-			  n += len
-			  strxx = strxx.slice(n)
-			  console.log(`Check this ${strxx}`)
-			  n = strxx.indexOf("}");
-			  strxx = strxx.substr(0,n)
-			  console.log(`Check this ${strxx}`)
-			  this.numDistricts = `${strxx}`
-				this.Want2Delete()
-		  },	  // error on count
-		  errorCode => this.statusCode = errorCode);  
-
- 
-   }  // end deleteDistrict 
+   }	// end getDistrictCount(retval)
 
 
 
-
-Want2Delete(){
-// if there are schools in disrict - cannot delete
-if (this.numDistricts == 0 )
-{
-   if(confirm("Num Schools = "+ this.numDistricts + 
-   " Are you sure to delete school district "+this.locDistrictId+' - id = '+ this.locDistrictName ))
-   {
-   
- this.preProcessConfigurations();
- this.districtService.deleteDistrictById(this.locDistrictId)
-	 .subscribe(successCode => {
-			   //this.statusCode = successCode;
-			   //Expecting success code 204 from server
-			   this.statusCode = 204;
-			   this.getAllDistricts();	
-			   this.backToCreateDistrict();
-		   },
-		   errorCode => this.statusCode = errorCode); 
-   }	 // end confirm
-} // end else
-else
-{
-	alert("District " + this.locDistrictName + " has " + this.numDistricts + " schools - CANNOT DELETE")
-}
-
-
-
-} // end Want2Delete?
 }	// end district.component
     
 

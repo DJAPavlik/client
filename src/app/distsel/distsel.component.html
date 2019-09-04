@@ -1,0 +1,54 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Ng2Select2Demo</title>
+    <base href="/">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--link rel="icon" type="image/x-icon" href="favicon.ico"-->
+ 
+  </head>
+
+  
+<body>
+    <h1>Hello World!!!</h1>
+    <div>
+    <h4>Select Field</h4>
+    <select2 [data]="fieldData" [width]=10 (valueChanged)="chngField($event)"></select2>
+    <!--div *ngIf="selField">
+      <br/><br/>
+      <p>Selected:</p> <b>{{selField}}</b>
+    </div-->
+    <br/><br/>
+    <p>valueChanged: </p> <b>{{valueChanged}}</b>
+    <p>Selected: </p> <b>{{selField}}</b>
+</div>
+    <br/><br/>
+  <div>
+    <h4>Select Operation</h4>
+        <select2 [data]="opData" [width]=10 (valueChanged)="chngOP($event)"></select2>
+     
+          <br/><br/>
+         <p> Selected Operation:</p> <b>{{selOp}}</b>
+  </div>   
+<div>
+        <br/><br/>
+        <h4>Enter Search Data</h4>
+        <tr>
+          <td>
+              <div>
+                  <label>name:
+                    <input type='text' value='selVal' ngModel="selVal" name="selVal">
+                  </label>
+                </div>
+        </td></tr>
+        <br/><br/>
+        <p>{{selVal}}</p>
+        <br/>	
+</div>
+          <p></p>  
+          <button (click)="goBack()">go back</button>
+          <button (click)="save()">save</button>
+</body>
+

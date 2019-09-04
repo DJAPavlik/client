@@ -18,9 +18,16 @@ export class districtService {
 	
 	//Fetch all districts
     getAllDistricts(): Observable<District[]> {
+	    // let xxy = this.http.get(this.districtUrl+"/get-district")
+		// .pipe(map(this.extractData))
+		// .pipe(catchError(this.handleError)); 
+		// console.log(xxy)
+		// console.log('REVIEW CONSOLE LOG'		)
+		// return xxy;
+		
 		return this.http.get(this.districtUrl+"/get-district")
 			.pipe(map(this.extractData))
-			.pipe(catchError(this.handleError)); 
+			.pipe(catchError(this.handleError));  
 
     }
 	//Create district
@@ -32,14 +39,15 @@ export class districtService {
             .pipe(catchError(this.handleError));
     }
 	//Fetch district by id
-    getDistrictById(districtId: string): Observable<District> {
+    getDistrictById(districtId: number): Observable<District> {
 		let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: cpHeaders });
 		console.log(this.districtUrl +"/get-district-by-id?id="+ districtId);
-		return this.http.get(this.districtUrl +"/get-district-by-id?id="+ districtId)
-			   .pipe(map(this.extractData))
-			   .pipe(catchError(this.handleError)); 
-    }	
+		return  this.http.get(this.districtUrl +"/get-district-by-id?id="+ districtId)
+		   .pipe(map(this.extractData))
+		   .pipe(catchError(this.handleError));
+	}
+
 	//Update district
     updateDistrict(district: District):Observable<number> {
 	    let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
@@ -55,7 +63,35 @@ export class districtService {
 		return this.http.delete(this.districtUrl +"/delete-district?id="+ districtId)
 			   .pipe(map(success => success.status))
 			   .pipe(catchError(this.handleError)); 
-    }
+	}  // end deleteDistrictByID(...)
+	countDistricts(){
+		let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+
+		let zzy2 = this.http.get(this.districtUrl +"/get-district-count")
+		.pipe(map(success => success))
+		.pipe(catchError(this.handleError)); 
+
+		console.log('  countDISTRICTS - REVIEW CONSOLE LOG Upon return'		)
+		console.log(zzy2)
+		return zzy2;
+
+	}	// end countDistricts()
+
+    // Count schools withing a given district number
+	countSchools(districtNum: string) {
+		let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+	//	let options = new RequestOptions({ headers: cpHeaders });
+		let zzy1 =this.http.get(this.districtUrl +"/get-school-count?distNum="+ districtNum)
+			   .pipe(map(success => success))
+			   .pipe(catchError(this.handleError)); 
+		
+		console.log('   COUNT SCHOOLS -- REVIEW CONSOLE LOG Upon return'		)
+		console.log(zzy1)
+		return zzy1;
+	}  // end deleteDistrictByID(...)
+
+
+
 	private extractData(res: Response) {
 		let body = res.json();
         return body;

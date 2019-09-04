@@ -1,0 +1,93 @@
+
+<h1 class="text-center">Districts Data</h1>
+<div>
+ <!-- form [formGroup]="districtForm" (ngSubmit)="onDistrictFormSubmit()" -->
+    <form [formGroup]="districtForm" >
+  <table class="table-striped" style="margin:0 auto;">
+    <tr><td>Enter Name</td><td><input formControlName="name">
+	       <label *ngIf="districtForm.get('name').invalid && processValidation" [ngClass] = "'error'"> Name is required. </label>
+       </td></tr>
+       <br/>
+    <tr><td>      Address</td><td><input formControlName="addr">
+	       <label *ngIf="districtForm.get('addr').invalid && processValidation" [ngClass] = "'error'"> Address is required. </label>
+  </td></tr>
+  <br/>	
+  <tr><td>      City</td><td><input formControlName="city">
+    <label *ngIf="districtForm.get('city').invalid && processValidation" [ngClass] = "'error'"> City is required. </label>
+</td></tr> 
+<br/>	
+<tr><td>      State</td><td><input formControlName="status">
+  <label *ngIf="districtForm.get('status').invalid && processValidation" [ngClass] = "'error'"> State is required. </label>
+</td></tr>
+<br/>	
+<tr><td>      Zip</td><td><input formControlName="zip">
+  <label *ngIf="districtForm.get('zip').invalid && processValidation" [ngClass] = "'error'"> Zip is required. </label>
+</td></tr>
+<br/>	
+<tr><td>  Enrollment</td><td><input formControlName="enr">
+  <label *ngIf="districtForm.get('enr').invalid && processValidation" [ngClass] = "'error'"> Enrollment is required. </label>
+</td></tr>
+<br/>	
+
+  <tr *ngIf="districtIdToUpdate"><td>  id</td><td><input formControlName="id">
+    <label *ngIf="districtForm.get('id').invalid && processValidation" [ngClass] = "'error'"> Enrollment is required. </label>
+  </td></tr>
+  <br/>	
+  <tr *ngIf="districtIdToUpdate"><td> distnum</td><td><input formControlName="distnum">
+    <label *ngIf="districtForm.get('distnum').invalid && processValidation" [ngClass] = "'error'"> Enrollment is required. </label>
+    <br/>
+  </td></tr>
+
+  
+    <tr><td colspan="2">
+	    <button class="btn btn-default" *ngIf="!districtIdToUpdate" (click)="onDistrictFormSubmit()">CREATE</button>  
+		  <button class="btn btn-default" *ngIf="districtIdToUpdate"  (click)="onDistrictFormSubmit()">UPDATE</button>  
+	    <button class="btn btn-default" (click)="backToDistRev()" >Cancel</button>  
+	</td></tr>
+  </table>
+ </form> 
+ <br/>
+ <div class="text-center" *ngIf="statusCode; else processing">
+   <div *ngIf="statusCode === 201" [ngClass] = "'success'">
+	    District added successfully.
+   </div>   
+   <div *ngIf="statusCode === 409" [ngClass] = "'success'">
+        District already exists.
+   </div>   	
+   <div *ngIf="statusCode === 200" [ngClass] = "'success'">
+        District updated successfully.
+   </div>   	      
+   <div *ngIf="statusCode === 204" [ngClass] = "'success'">
+        District deleted successfully.
+   </div>   	   
+   <div *ngIf="statusCode === 500" [ngClass] = "'error'">
+        Internal Server Error.
+   </div>	
+ </div>
+ 
+</div>     
+
+<!--
+    <ng-template #processing>
+	<img *ngIf="requestProcessing" src="assets/images/loading.gif">
+ </ng-template>
+
+
+<h3 class="text-center">District List</h3>  
+<table class="table-striped" style="margin:0 auto;" *ngIf="allDistricts">
+  <tr><th>Id</th> <th>Dist Num</th><th>Name</th><th>Address</th>
+    <th>City, St Zip</th><th>Enrollment</th>
+    <th></th><th></th><th></th></tr>
+  <tr *ngFor="let district of allDistricts"  >
+    <td style="text-align:center">{{district.id}}</td>
+    <td style="text-align:center">{{district.distnum}}</td> 
+    <td>{{district.name}}</td> <td>{{district.addr}}</td> 
+    <td>{{district.city}} {{district.status}}, {{district.zip}}</td>
+    <td style="text-align:right">{{district.enr}}</td>
+  <td><button class="btn btn-default" type="button" routerLink="/distEdit/{{district.distnum}}" routerLinkActive="active">Edit</button> </td> 
+  <td><button class="btn btn-default" type="button" (click)="deleteDistrict(district.distnum)">Delete</button></td>
+  <td><button class="btn btn-default" type="button" (click)="displaySchoolsInDistrict(district.distnum)">Schools</button> </td>  
+  <td><button class="btn btn-default" routerLink="/xxx/{{district.distnum}}" routerLinkActive="active" >Schools</button></td>
+
+  </tr>
+</table>  -->

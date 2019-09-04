@@ -1,24 +1,39 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent }  from './app.component';
 import { DistrictComponent }  from './district/district.component';
 import { districtService } from './district/district.service';
+import { SchoolComponent } from './school/school.component';
+import { schoolService } from './school/school-svc.service';
 
+import { AppRoutingModule } from './app-routing.module';
+import { DisteditaddComponent } from './disteditadd/disteditadd.component';
+import { DistselComponent } from './distsel/distsel.component';
+import { Select2Module } from 'ng2-select2';
 @NgModule({
   imports: [     
         BrowserModule,
 		HttpModule,
-		ReactiveFormsModule
+    ReactiveFormsModule, 
+    AppRoutingModule,
+    Select2Module,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   declarations: [
         AppComponent,
-		DistrictComponent
+		DistrictComponent,
+		SchoolComponent,
+		DisteditaddComponent,
+    DistselComponent
   ],
   providers: [
-        districtService
+        districtService,
+        schoolService,
+        AppRoutingModule
   ],
   bootstrap: [
         AppComponent
